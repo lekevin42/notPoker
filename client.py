@@ -1,27 +1,42 @@
 import socket
 
-def Main():
-        host = 'localhost'
-        port = 5000
 
-        mySocket = socket.socket()
-        mySocket.connect((host,port))
+class Client:
+	def __init__(self):
+		self.socket = None
+		
+	def start(self):
+		self.socket = socket.socket()
+		self.socket.connect(("localhost", 5000))
+		
+	def play(self):
+		counter = 0
+		max = 3
+		
+		while counter < max:
+			data = self.socket.recv(1024).decode()
+			print(data)
+		
+		
+			message = input(" -> ")
+			self.socket.send(str(message).encode())
 
-        message = ""
+			data = self.socket.recv(1024).decode()
+			print(data)
+			
+			counter += 1
+			
+		data = self.socket.recv(1024).decode()
 
-        while message != 'q':
-                data = mySocket.recv(1024).decode()
+		print(data)
 
-                print(data)
-                message = input(" -> ")
-                mySocket.send(message.encode())
-                #data = mySocket.recv(1024).decode()
+		self.socket.close()
 
-                #print ('Received from server: ' + data)
-
-                #message = input(" -> ")
-
-        mySocket.close()
+def main():
+	client = Client()
+	client.start()
+	client.play()
+	
 
 if __name__ == '__main__':
-    Main()
+	main()
