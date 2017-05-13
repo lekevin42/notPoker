@@ -67,6 +67,8 @@ def verifyFileSig(fileName, pubKey, signature):
 		
 	hash = SHA512.new(contents).hexdigest()
 	
+	print(hash, signature, pubKey)
+	
 	return verifySig(hash, signature, pubKey)
 	
 	
