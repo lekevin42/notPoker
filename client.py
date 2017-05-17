@@ -2,7 +2,7 @@ import socket
 import Crypto
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES
-
+import os
 
 class Client:
 	"""
@@ -21,7 +21,7 @@ class Client:
 		self.socket = socket.socket()
 		self.socket.connect(("localhost", 5000))
 		self.private_key = RSA.generate(1024)
-		self.symmetric_key = "0123456789abcdef"
+		self.symmetric_key = os.urandom(16)
 		self.cipher = AES.new(self.symmetric_key, AES.MODE_ECB)
 		
 		
